@@ -1,0 +1,48 @@
+@(todoForm: Form[models.TodoFormData],todos : Seq[models.Todo])(implicit request: RequestHeader)
+@main() {
+  <div class='container mb-3'>
+    <h1> Add a Todo </h1>
+    <form action='@routes.HomeController.addTodo()', role ='form' method='POST'>
+        <div class="mb-3">
+            <label for="title" class="form-label">Todo Title</label>
+            <input type="text" class="form-control"  name="title" id="title" value="" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Todo Description</label>
+            <input type="text" class="form-control" name="description" id="description" value ="" >
+        </div>
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+</div>
+
+
+<div class='container my-3'>
+  <h1> Your Todo </h1>
+
+  <table class="table">
+    <thead>
+    <tr>
+        <!-- <th scope="col">SNO</th> -->
+        <th scope="col">Titile</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for(t <-todos){
+    <tr>
+        <!-- <th scope="row">@t.id</th> -->
+        <td>@t.title</td>
+        <td>@t.description</td>
+        <td>
+            <a class="btn btn-primary btn-sm mx-1" href="/update/@t.id" role="button">Update</a>
+            <a class="btn btn-danger btn-sm mx-1" href="@routes.HomeController.deleteTodo(t.id)" role="button">Delete</a>
+        </td>
+    </tr>
+
+   
+  }
+    </tbody>
+</table>
+</div>
+}
